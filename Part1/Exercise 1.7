@@ -1,0 +1,14 @@
+# new image that starts from ubuntu:22.04
+FROM ubuntu:22.04
+# Use /usr/src/app as our workdir.
+WORKDIR /usr/src/app
+# update all the packages
+RUN apt-get update
+# install curl 
+RUN apt-get -y install curl
+# Copy the script.sh file from this directory to /usr/src/app/ creating /usr/src/app/script.sh
+COPY script.sh .
+# add execution permissions
+RUN chmod +x script.sh
+# When running docker run the command will be ./script.sh
+CMD ./script.sh
