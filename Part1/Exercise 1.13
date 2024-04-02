@@ -1,0 +1,10 @@
+command: `docker run -p 8080:8080 --name backend-container-41 example-backend-4`
+Dockerfile:
+
+FROM golang:1.16
+WORKDIR /usr/app/src
+COPY . .
+ENV PORT=8080
+EXPOSE $PORT
+RUN go build
+CMD ./server
