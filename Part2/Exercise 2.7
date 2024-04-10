@@ -1,0 +1,32 @@
+version: '4.0'
+
+services:
+  frontend-service:
+    image: frontend # local image built using exercises from part 1
+    container_name: frontend-container
+    ports:
+      - 5000:5000
+  backend-service:
+    image: backend # local image built using exercises from part 1
+    ports:
+      - 8080:8080
+    container_name: backend-container
+    environment:
+      - REDIS_HOST=redis-service
+      - POSTGRES_HOST=db
+      - POSTGRES_PASSWORD=example
+    depends_on:
+      - db
+  redis-service:
+    image: redis
+    container_name: cache
+  db:
+    image: postgres:13.2-alpine
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=example
+    volumes:
+      - type: bind
+        source: ./pgdb
+        target: /var/lib/postgresql/data
+    container_name: postgres_database
